@@ -1,4 +1,4 @@
-﻿using LexGenerator.Analyzer;
+﻿using LexBatch.Analyzer;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -6,14 +6,14 @@ using System.Reflection;
 using System.Runtime.ConstrainedExecution;
 using System.Text;
 
-namespace LexGenerator.LexInterfaces
+namespace LexBatch.LexInterfaces
 {
     public interface ILexConfigure
     {
         string InputFileTitle { get; set; }
         string LogFileTitle { get; set; }
         string OutputFileTitle { get; set; }
-        LoggingOptions Verbose { get; }
+        LoggingOptions Verbose { get; set; }
 
         static string EnumToString(Enum en)
         {
@@ -31,12 +31,13 @@ namespace LexGenerator.LexInterfaces
             return en.ToString();
         }
 
+        void CloseLogging();
         void Error(int LineNumber, string text, ErrorCodes error);
-        void initLogging(string value);
-        void logFine(string message);
-        void logInfo(string message);
-        void logSevere(string message);
-        void parseError(ErrorCodes errorMessage);
+        void InitLogging();
+        void LogFine(string message);
+        void LogInfo(string message);
+        void LogSevere(string message);
+        void ParseError(ErrorCodes errorMessage);
 
         
     }

@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "LexBatch": {
+      "commandName": "Project",
+      "commandLineArgs": "-VinputC:\\ProgramData\\Lex\\Sample.lex -output \\LeXSample.cs -log \"LeX\""
+    }
+  }
+}

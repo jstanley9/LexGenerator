@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 
-namespace LexGenerator.Analyzer
+namespace LexBatch.Analyzer
 {
     public enum LoggingOptions
     {
