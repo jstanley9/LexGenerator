@@ -8,12 +8,12 @@ namespace LexBatch.LexInterfaces
 {
     public interface ILogger
     {
-        Level LogLevel { get; set; }
+        ELevel LogLevel { get; set; }
         string LogFileTitle { get; }
 
         void StopLogging();
-        void Log(Level logLevel, string message);
-        void Log(Level logLevel, string message, Exception exception);
+        void Log(ELevel logLevel, string message);
+        void Log(ELevel logLevel, string message, Exception exception);
 
     }
 }

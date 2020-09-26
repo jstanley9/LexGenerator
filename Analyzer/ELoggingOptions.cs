@@ -5,7 +5,7 @@ using System.Text;
 
 namespace LexBatch.Analyzer
 {
-    public enum LoggingOptions
+    public enum ELoggingOptions
     {
         [Description("Not Logging")]
         NoLogging,

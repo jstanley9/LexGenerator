@@ -5,7 +5,7 @@ using System.Text;
 
 namespace LexBatch.Analyzer
 {
-    public enum Level
+    public enum ELevel
     {
         Off = 0b_0000_0000,    // No logging
         Severe = 0b_0000_0001,

@@ -8,7 +8,7 @@ namespace LexBatch.Analyzer
 {
     public class Logger : ILogger
     {
-        public Level LogLevel { get; set; } = Level.Warning;
+        public ELevel LogLevel { get; set; } = ELevel.Warning;
         private readonly StreamWriter logFile = null;
 
         public string LogFileTitle { get; private set; } 
@@ -24,7 +24,7 @@ namespace LexBatch.Analyzer
             return new Logger(logFileTitle);
         }
 
-        public void Log(Level logLevel, string message)
+        public void Log(ELevel logLevel, string message)
         {
             if (((int)logLevel & (int)LogLevel) != 0)
             {
@@ -33,7 +33,7 @@ namespace LexBatch.Analyzer
             }
         }
 
-        public void Log(Level logLevel, string message, Exception exception)
+        public void Log(ELevel logLevel, string message, Exception exception)
         {
             throw new NotImplementedException();
         }

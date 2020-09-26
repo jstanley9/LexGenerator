@@ -4,10 +4,10 @@ using System.Text;
 
 namespace LexBatch.Analyzer
 {
-    public enum ParseArgResult
+    public enum EEdgeType
     {
-        ArgOK,
-        ArgPlusOneOK,
-        ArgIncorrect
+        Epsilon,
+        CCL,
+        Empty
     }
 }

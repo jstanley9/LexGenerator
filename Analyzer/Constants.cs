@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace LexGenerator.Analyzer
+namespace LexBatch.Analyzer
 {
     static public class Constants
     {
@@ -17,5 +17,12 @@ namespace LexGenerator.Analyzer
         public const string ArgLog = "log";
         public const string ArgOutput = "output";
         public const string Error = "Error: ";
+
+        public const string CLOSE_CURLY_BRACE = "}";
+        public const string ESCAPE = "\\";
+        public const string NEW_LINE = "\n";
+        public const string OPEN_CURLY_BRACE = "{";
+        public const string QUOTE = "\"";
+        public const string SPACE = " ";
     }
 }

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace LexBatch.Analyzer
 {
-    public enum ErrorCodes
+    public enum EErrorCodes
     {
         [Description("Not enough memory for NFA")]
         Memory,

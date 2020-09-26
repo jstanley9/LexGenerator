@@ -1,5 +1,4 @@
 ﻿using LexBatch.LexInterfaces;
-using LexGenerator.Analyzer;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -12,12 +11,10 @@ namespace LexBatch.Analyzer
     {
         private int ArgIndex { get; set; } = 0;
         private readonly string[] args;
-        private readonly ILexConfigure config;
 
-        public ProcessArguments(string[] args, ILexConfigure config)
+        public ProcessArguments(string[] args)
         {
             this.args = args;
-            this.config = config;
         }
 
         public bool ParseArguments()
@@ -38,12 +35,12 @@ namespace LexBatch.Analyzer
                     ArgIndex++;
                     switch (ParseArgument(arg))
                     {
-                        case ParseArgResult.ArgOK:
+                        case EParseArgResult.ArgOK:
                             break;
-                        case ParseArgResult.ArgPlusOneOK:
+                        case EParseArgResult.ArgPlusOneOK:
                             ArgIndex++;
                             break;
-                        case ParseArgResult.ArgIncorrect:
+                        case EParseArgResult.ArgIncorrect:
                             return false;
                         default:
                             return false;
@@ -79,32 +76,32 @@ namespace LexBatch.Analyzer
             return nextArg;
         }
 
-        private ParseArgResult ParseArgument(string arg)
+        private EParseArgResult ParseArgument(string arg)
         {
             bool continueEvaluation = true;
-            ParseArgResult result = ParseArgResult.ArgOK;
+            EParseArgResult result = EParseArgResult.ArgOK;
             for (int pos = 1; (continueEvaluation && pos < arg.Length); pos++)
             {
                 string charAtPos = arg.Substring(pos, 1);
                 switch (charAtPos)
                 {
                     case "v":
-                        config.Verbose = LoggingOptions.PrintStatistics;
+                        LexConfiguration.Verbose = ELoggingOptions.PrintStatistics;
                         break;
                     case "V":
-                        config.Verbose = LoggingOptions.PrintInternalDiagnostics;
+                        LexConfiguration.Verbose = ELoggingOptions.PrintInternalDiagnostics;
                         break;
                     case "i":
                         continueEvaluation = false;
-                        result = SetFileTitle(arg.Substring(pos), Constants.ArgInput,  (title) => config.InputFileTitle = title);
+                        result = SetFileTitle(arg.Substring(pos), Constants.ArgInput,  (title) => LexConfiguration.InputFileTitle = title);
                         break;
                     case "o":
                         continueEvaluation = false;
-                        result = SetFileTitle(arg.Substring(pos), Constants.ArgOutput, (title) => config.OutputFileTitle = title);
+                        result = SetFileTitle(arg.Substring(pos), Constants.ArgOutput, (title) => LexConfiguration.OutputFileTitle = title);
                         break;
                     case "l":
                         continueEvaluation = false;
-                        result = SetFileTitle(arg.Substring(pos), Constants.ArgLog, (title) => config.LogFileTitle = title);
+                        result = SetFileTitle(arg.Substring(pos), Constants.ArgLog, (title) => LexConfiguration.LogFileTitle = title);
                         break;
                     default:
                         Console.WriteLine($"Unknown argument '{charAtPos}' string '{arg}'");
@@ -114,7 +111,7 @@ namespace LexBatch.Analyzer
             return result;
         }
 
-        private ParseArgResult SetFileTitle(string arg, string command, Func<string, string> setTitle)
+        private EParseArgResult SetFileTitle(string arg, string command, Func<string, string> setTitle)
         {
             string nextArg = GetNextArg();
             string fileTitleArg = GetFileTitle(arg, nextArg, command);
@@ -132,12 +129,12 @@ namespace LexBatch.Analyzer
             }
             return fileTitle;
         }
-        private ParseArgResult EvaluateNextArg(string NextArg)
+        private EParseArgResult EvaluateNextArg(string NextArg)
         {
-            ParseArgResult result = ParseArgResult.ArgPlusOneOK;
+            EParseArgResult result = EParseArgResult.ArgPlusOneOK;
             if (NextArg.StartsWith(Constants.ArgPrefix))
             {
-                result = ParseArgResult.ArgOK;
+                result = EParseArgResult.ArgOK;
             }
             return result;
         }
