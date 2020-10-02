@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 
 namespace LexBatch.Analyzer
 {
@@ -31,13 +30,21 @@ namespace LexBatch.Analyzer
             ErrorCount++;
         }
 
-        public static string GetEnumDescription(Enum value)
+        public static string GetEnumDescription(Enum enumValue)
         {
-            var enumMember = value.GetType().GetMember(value.ToString()).FirstOrDefault();
+            var type = enumValue.GetType();
+            var typeInfo = type.GetTypeInfo();
+            var memberInfo = typeInfo.GetMember(enumValue.ToString());
+            var attributes = memberInfo[0].GetCustomAttributes<DescriptionAttribute>();// (typeof(DescriptionAttribute), false);
+            var description = (DescriptionAttribute)attributes.FirstOrDefault();
+            return description == null ? String.Empty
+                                       : description.Description; 
+
+/*          var enumMember = value.GetType().GetMember(value.ToString()).FirstOrDefault();
             var descriptionAttribute = enumMember == null ? default
                                                           : enumMember.GetCustomAttributes(typeof(DescriptionAttribute)) as DescriptionAttribute;
             return descriptionAttribute == null ? String.Empty
-                                                : descriptionAttribute.Description;
+                                                : descriptionAttribute.Description;*/
         }
 
         public static void InitLogging()

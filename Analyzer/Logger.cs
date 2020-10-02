@@ -1,8 +1,6 @@
 ﻿using LexBatch.LexInterfaces;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
 namespace LexBatch.Analyzer
 {
@@ -11,7 +9,7 @@ namespace LexBatch.Analyzer
         public ELevel LogLevel { get; set; } = ELevel.Warning;
         private readonly StreamWriter logFile = null;
 
-        public string LogFileTitle { get; private set; } 
+        public string LogFileTitle { get; private set; }
 
         private Logger(string logFileTitle)
         {
@@ -30,6 +28,7 @@ namespace LexBatch.Analyzer
             {
                 string timedMessage = $"{DateTime.Now:yyyy-MM-ddTHH:mm:ss.fffffK}: {message}";
                 logFile.WriteLine(timedMessage);
+                Console.WriteLine(timedMessage);
             }
         }
 

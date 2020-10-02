@@ -1,7 +1,4 @@
 ﻿using LexBatch.LexInterfaces;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace LexBatch
 {

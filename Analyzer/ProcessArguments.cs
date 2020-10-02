@@ -1,9 +1,4 @@
-﻿using LexBatch.LexInterfaces;
-using System;
-using System.Collections.Generic;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Text;
+﻿using System;
 
 namespace LexBatch.Analyzer
 {
@@ -93,7 +88,7 @@ namespace LexBatch.Analyzer
                         break;
                     case "i":
                         continueEvaluation = false;
-                        result = SetFileTitle(arg.Substring(pos), Constants.ArgInput,  (title) => LexConfiguration.InputFileTitle = title);
+                        result = SetFileTitle(arg.Substring(pos), Constants.ArgInput, (title) => LexConfiguration.InputFileTitle = title);
                         break;
                     case "o":
                         continueEvaluation = false;
@@ -119,7 +114,7 @@ namespace LexBatch.Analyzer
             return EvaluateNextArg(nextArg);
         }
 
-        private string GetFileTitle(string arg, string nextArg, string command) 
+        private string GetFileTitle(string arg, string nextArg, string command)
         {
             string fileTitle = nextArg;
             if (nextArg.StartsWith(Constants.ArgPrefix))

@@ -1,8 +1,5 @@
 ﻿using LexBatch.Analyzer;
 using System;
-using System.Collections.Generic;
-using System.Net.Security;
-using System.Text;
 
 namespace LexBatch.LexInterfaces
 {

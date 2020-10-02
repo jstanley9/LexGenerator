@@ -1,7 +1,5 @@
 ﻿using LexBatch.LexInterfaces;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace LexBatch.Analyzer
 {
@@ -13,7 +11,7 @@ namespace LexBatch.Analyzer
         private EItemAnchor anchor = EItemAnchor.NoAnchor;
         public EItemAnchor Anchor
         {
-            get { return anchor; } 
+            get { return anchor; }
             set { SetAnchor(value); }
         }
 

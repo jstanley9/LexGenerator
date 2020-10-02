@@ -1,9 +1,6 @@
 ﻿using LexBatch.LexInterfaces;
-using Microsoft.VisualBasic.CompilerServices;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Text;
 
 namespace LexBatch.Analyzer
 {
@@ -68,7 +65,7 @@ namespace LexBatch.Analyzer
             if (!(IsInQuote))
             {
                 while ((CurrentPosition + 1) < CurrentRule.Length && GetToken(false).Equals(Constants.OPEN_CURLY_BRACE))
-                {  
+                {
                     ExpandMacro();
                 }
             }
@@ -127,20 +124,24 @@ namespace LexBatch.Analyzer
             int closePosition = CurrentRule.IndexOf(Constants.CLOSE_CURLY_BRACE, CurrentPosition);
             if (closePosition < 0)
             {
-                closePosition = CurrentRule.Length;
-            }
-            string macroName = CurrentRule.Substring(CurrentPosition + 1, closePosition);
-            CurrentPosition = closePosition + 1;
-            RuleStack.Push(new StackedScanner(CurrentPosition, CurrentRule));
-            CurrentPosition = 0;
-            if (Macros.ContainsKey(macroName))
-            {
-                CurrentRule = Macros[macroName];
+                Error(LineInput.LineNumber, CurrentRule.Substring(CurrentPosition), EErrorCodes.BadMacro);
             }
             else
             {
-                Error(LineInput.LineNumber, macroName, EErrorCodes.BadMacro);
-                CurrentRule = String.Empty;
+                CurrentPosition++;
+                string macroName = CurrentRule.Substring(CurrentPosition, closePosition - CurrentPosition);
+                CurrentPosition = closePosition + 1;
+                RuleStack.Push(new StackedScanner(CurrentPosition, CurrentRule));
+                CurrentPosition = 0;
+                if (Macros.ContainsKey(macroName))
+                {
+                    CurrentRule = Macros[macroName];
+                }
+                else
+                {
+                    CurrentRule = String.Empty;
+                    Error(LineInput.LineNumber, CurrentRule.Substring(CurrentPosition), EErrorCodes.NoMacro);
+                }
             }
         }
 
@@ -194,11 +195,11 @@ namespace LexBatch.Analyzer
 
         private int GetStartOfAccept(string rule, int endOfRule)
         {
-            for (int start = endOfRule; start > 0; start--)
+            for (int start = endOfRule; start < rule.Length; start++)
             {
                 if (!(Char.IsWhiteSpace(rule[start])))
                 {
-                    return start + 1;
+                    return start;
                 }
             }
             return rule.Length;
@@ -243,7 +244,7 @@ namespace LexBatch.Analyzer
 
         private void SetMap()
         {
-            foreach (ETokenType value in (ETokenType[]) Enum.GetValues(typeof(ETokenType)))
+            foreach (ETokenType value in (ETokenType[])Enum.GetValues(typeof(ETokenType)))
             {
                 string description = LexConfiguration.GetEnumDescription(value);
                 if (description.Length > 0)

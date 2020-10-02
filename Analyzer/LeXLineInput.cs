@@ -1,8 +1,6 @@
 ﻿using LexBatch.LexInterfaces;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
 namespace LexBatch.Analyzer
 {
@@ -35,20 +33,11 @@ namespace LexBatch.Analyzer
             }
         }
 
-        public bool HasNext()
-        {
-            return (Line != String.Empty);
-        }
+        public bool HasNext() => Line != null && Line != String.Empty;
 
-        public bool NextLineStartsWith(string startsWith)
-        {
-            return (HasNext() && Line.StartsWith(startsWith));
-        }
+        public bool NextLineStartsWith(string startsWith) => HasNext() && Line.StartsWith(startsWith);
 
-        public bool NextLineStartsWithWhiteSpace()
-        {
-            return (HasNext() && Char.IsWhiteSpace(Line, 0));
-        }
+        public bool NextLineStartsWithWhiteSpace() => HasNext() && Char.IsWhiteSpace(Line, 0);
 
         private void OpenTextFile(string title)
         {
