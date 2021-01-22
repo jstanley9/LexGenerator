@@ -32,20 +32,21 @@ namespace LexBatch.Analyzer
 
         public static string GetEnumDescription(Enum enumValue)
         {
-            var type = enumValue.GetType();
-            var typeInfo = type.GetTypeInfo();
-            var memberInfo = typeInfo.GetMember(enumValue.ToString());
+            var memberInfo = GetEnumMemberInfo(enumValue);
             var attributes = memberInfo[0].GetCustomAttributes<DescriptionAttribute>();// (typeof(DescriptionAttribute), false);
             var description = (DescriptionAttribute)attributes.FirstOrDefault();
             return description == null ? String.Empty
-                                       : description.Description; 
-
-/*          var enumMember = value.GetType().GetMember(value.ToString()).FirstOrDefault();
-            var descriptionAttribute = enumMember == null ? default
-                                                          : enumMember.GetCustomAttributes(typeof(DescriptionAttribute)) as DescriptionAttribute;
-            return descriptionAttribute == null ? String.Empty
-                                                : descriptionAttribute.Description;*/
+                                       : description.Description;
         }
+
+        private static MemberInfo[] GetEnumMemberInfo(Enum enumValue)
+        {
+            var type = enumValue.GetType();
+            var typeInfo = type.GetTypeInfo();
+            return typeInfo.GetMember(enumValue.ToString());
+        }
+
+        public static string GetEnumName(Enum enumValue) => GetEnumMemberInfo(enumValue)[0].Name;
 
         public static void InitLogging()
         {
@@ -73,10 +74,12 @@ namespace LexBatch.Analyzer
             LogInfo($"Enter {LogCall(_callStack.Count, procName)}");
         }
 
-        public static void LogExit()
+        public static void LogExit(string procName = "")
         {
             int count = _callStack.Count;
-            LogInfo($"Exit {LogCall(count, _callStack.Pop())}");
+            string message = _callStack.Pop();
+            message = procName.Length > 0 ? procName : message;
+            LogInfo($"Exit {LogCall(count, message)}");
         }
 
         private static string LogCall(int count, string procName) => $"{count}: {procName}";

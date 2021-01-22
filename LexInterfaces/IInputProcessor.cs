@@ -1,7 +1,9 @@
-﻿namespace LexBatch.LexInterfaces
+﻿using LexBatch.Analyzer;
+
+namespace LexBatch.LexInterfaces
 {
     public interface IInputProcessor
     {
-        int GenerateNFA();
+        NFA GenerateNFA();
     }
 }

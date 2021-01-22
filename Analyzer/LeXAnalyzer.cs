@@ -10,20 +10,23 @@ namespace LexBatch.Analyzer
 
         public void Generate()
         {
-            int startingStateIndex = ProcessInput();
-            ConvertNFAtoDFA(startingStateIndex);
+            NFA startingState = ProcessInput();
+            ConvertNFAtoDFA(startingState);
             GenerateLexicalParser();
         }
 
-        private int ProcessInput()
+        private NFA ProcessInput()
         {
             IInputProcessor thompson = new LexInput(codeConstants, NFAList);
             return thompson.GenerateNFA();
         }
 
-        private void ConvertNFAtoDFA(int startingStateIndex)
+        private void ConvertNFAtoDFA(NFA startingState)
         {
-            //ReduceNFAToDFA();
+            LeXDFA dfa = new LeXDFA(NFAList);
+            List<Accept> acceptList = new List<Accept>();
+            int dfaCount = dfa.DFA(startingState, acceptList);
+            List<DFAState> DStates = dfa.DStates;
         }
 
         private void GenerateLexicalParser()

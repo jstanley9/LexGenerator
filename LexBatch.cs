@@ -3,7 +3,7 @@ using LexBatch.LexInterfaces;
 
 namespace LexBatch
 {
-    class LexBatch
+    internal class LexBatch
     {
         private void BuildLexicalAnalyzer()
         {
@@ -18,7 +18,7 @@ namespace LexBatch
             return result;
         }
 
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             LexBatch Lex = new LexBatch();
             try
@@ -26,7 +26,14 @@ namespace LexBatch
                 if (Lex.ProcessArgs(args))
                 {
                     LexConfiguration.InitLogging();
-                    Lex.BuildLexicalAnalyzer();
+                    try
+                    {
+                        Lex.BuildLexicalAnalyzer();
+                    }
+                    finally
+                    {
+                        LexConfiguration.CloseLogging();
+                    }
                 }
             }
             finally

@@ -1,6 +1,6 @@
 ﻿namespace LexBatch.LexInterfaces
 {
-    interface ITextInputReader
+    internal interface ITextInputReader
     {
         bool Close();
         string GetNextLine();

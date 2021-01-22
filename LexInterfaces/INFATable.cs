@@ -1,7 +1,9 @@
-﻿namespace LexBatch.LexInterfaces
+﻿using LexBatch.Analyzer;
+
+namespace LexBatch.LexInterfaces
 {
-    interface INFATable
+    internal interface INFATable
     {
-        int ParseRules();
+        NFA ParseRules();
     }
 }

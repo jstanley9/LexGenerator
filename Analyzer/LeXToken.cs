@@ -8,18 +8,12 @@ namespace LexBatch.Analyzer
         public string Token { get; set; }
         public ETokenType TokenType { get; set; }
 
-        public LeXToken(int lineNumber, string token, ETokenType type)
-        {
-            this.LineNumber = lineNumber;
-            this.Token = token;
-            this.TokenType = type;
-        }
+        public LeXToken(int lineNumber, string token, ETokenType type) => (LineNumber, Token, TokenType) = (lineNumber, token, type);
 
-        public bool IsTokenType(ETokenType tokenType)
-        {
-            return (this.TokenType == tokenType);
-        }
+        public bool HasCharacter(char Match_Character) => Token.Contains(Match_Character);
 
-        public override string ToString() => $"{LineNumber}: '{Token}' {LexConfiguration.GetEnumDescription(TokenType)}";
+        public bool IsTokenType(ETokenType tokenType) => this.TokenType == tokenType;
+
+        public override string ToString() => $"{LineNumber}: '{Token}' {LexConfiguration.GetEnumName(TokenType)}";
     }
 }

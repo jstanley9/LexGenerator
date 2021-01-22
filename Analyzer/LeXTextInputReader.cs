@@ -3,14 +3,11 @@ using System.IO;
 
 namespace LexBatch.Analyzer
 {
-    class LeXTextInputReader : ITextInputReader
+    internal class LeXTextInputReader : ITextInputReader
     {
         private readonly StreamReader Input;
 
-        public LeXTextInputReader(string title)
-        {
-            Input = File.OpenText(title);
-        }
+        public LeXTextInputReader(string title) => Input = File.OpenText(title);
 
         public bool Close()
         {
@@ -18,9 +15,6 @@ namespace LexBatch.Analyzer
             return true;
         }
 
-        public string GetNextLine()
-        {
-            return Input.ReadLine();
-        }
+        public string GetNextLine() => Input.ReadLine();
     }
 }

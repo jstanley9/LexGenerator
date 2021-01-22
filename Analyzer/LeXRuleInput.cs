@@ -109,10 +109,7 @@ namespace LexBatch.Analyzer
             return returnToken;
         }
 
-        private void Error(int lineNumber, string text, EErrorCodes error)
-        {
-            LexConfiguration.Error(lineNumber, text, error);
-        }
+        private void Error(int lineNumber, string text, EErrorCodes error) => LexConfiguration.Error(lineNumber, text, error);
 
         /// <summary>
         ///  Pushes the current scanner onto the stack. It then replaces the current scanner with the body of the macro.
@@ -129,7 +126,7 @@ namespace LexBatch.Analyzer
             else
             {
                 CurrentPosition++;
-                string macroName = CurrentRule.Substring(CurrentPosition, closePosition - CurrentPosition);
+                string macroName = CurrentRule[CurrentPosition..closePosition];
                 CurrentPosition = closePosition + 1;
                 RuleStack.Push(new StackedScanner(CurrentPosition, CurrentRule));
                 CurrentPosition = 0;
@@ -183,10 +180,10 @@ namespace LexBatch.Analyzer
                         CurrentRule = CurrentRule.Substring(0, endOfRule);
                     }
                 }
-                while (LineInput.NextLineStartsWith(Constants.SPACE))
+                while (LineInput.NextLineStartsWithWhiteSpace())
                 {
                     ISourceLine nextAccept = LineInput.ReadLine();
-                    CurrentAcceptActions += nextAccept.Line.Trim() + Environment.NewLine;
+                    CurrentAcceptActions += Environment.NewLine + nextAccept.Line.Trim();
                 }
                 return;
             }
@@ -219,21 +216,10 @@ namespace LexBatch.Analyzer
             return token;
         }
 
-        private bool IsEndOfRule()
-        {
-            return (CurrentPosition >= CurrentRule.Length);
-        }
+        private bool IsEndOfRule() => CurrentPosition >= CurrentRule.Length;
 
-        private ETokenType MapToken2ToTokenType(string currentChar, bool sawEscape)
-        {
-            if (sawEscape ^ IsInQuote || !(TokenDict.ContainsKey(currentChar)))
-            {
-                return ETokenType.L;
-            }
-            {
-                return TokenDict[currentChar];
-            }
-        }
+        private ETokenType MapToken2ToTokenType(string currentChar, bool sawEscape) => (sawEscape ^ IsInQuote || !(TokenDict.ContainsKey(currentChar)))
+                                                                                       ? ETokenType.L : TokenDict[currentChar];
 
         private void PopRuleStack()
         {

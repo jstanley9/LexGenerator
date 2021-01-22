@@ -14,10 +14,10 @@ namespace LexBatch.Analyzer
             this.NFAList = NFAList;
         }
 
-        public int GenerateNFA()
+        public NFA GenerateNFA()
         {
             ILineInput lineInput = new LeXLineInput();
-            int initialState = -1;
+            NFA initialState = null;
             if (lineInput.FileIsOpen)
             {
                 codeConstants.Clear();
@@ -33,7 +33,7 @@ namespace LexBatch.Analyzer
             return initialState;
         }
 
-        private int GenerateNFA(ILineInput lineInput, Dictionary<string, string> macros)
+        private NFA GenerateNFA(ILineInput lineInput, Dictionary<string, string> macros)
         {
             if (lineInput.NextLineStartsWith(Constants.RulesBoundary))
             {
@@ -41,7 +41,7 @@ namespace LexBatch.Analyzer
             }
 
             INFATable nfaStates = new LeXNFATable(lineInput, macros, NFAList);
-            int startState = nfaStates.ParseRules();
+            NFA startState = nfaStates.ParseRules();
             lineInput.ReadLine();
             return startState;
         }

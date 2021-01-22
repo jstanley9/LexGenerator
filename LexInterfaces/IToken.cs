@@ -8,6 +8,7 @@ namespace LexBatch.LexInterfaces
         string Token { get; set; }
         ETokenType TokenType { get; set; }
 
+        bool HasCharacter(char Match_Character);
         bool IsTokenType(ETokenType tokenType);
         string ToString();
     }

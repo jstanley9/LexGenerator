@@ -1,6 +1,6 @@
 ﻿namespace LexBatch.LexInterfaces
 {
-    interface IAnalyzable
+    internal interface IAnalyzable
     {
         void Generate();
     }

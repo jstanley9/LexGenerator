@@ -4,6 +4,8 @@
     {
         Epsilon,
         CCL,
+        CCLComplement,
+        Token,
         Empty
     }
 }

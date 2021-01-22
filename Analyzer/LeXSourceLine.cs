@@ -2,7 +2,7 @@
 
 namespace LexBatch
 {
-    class LeXSourceLine : ISourceLine
+    internal class LeXSourceLine : ISourceLine
     {
         public string Line { get; private set; }
         public int LineNumber { get; private set; }

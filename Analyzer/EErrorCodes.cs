@@ -33,6 +33,8 @@ namespace LexBatch.Analyzer
         [Description("Quotes not closed before end of rule")]
         OpenQuote,
         [Description("Escape character last character in the rule")]
-        OpenEscape
+        OpenEscape,
+        [Description("CCL set already allocated")]
+        CCL
     }
 }

@@ -4,7 +4,7 @@ using System.IO;
 
 namespace LexBatch.Analyzer
 {
-    class LeXLineInput : ILineInput
+    internal class LeXLineInput : ILineInput
     {
         public bool FileIsOpen { get; private set; }
         private ITextInputReader Input { get; set; }

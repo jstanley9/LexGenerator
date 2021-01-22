@@ -27,6 +27,8 @@ namespace LexBatch.Analyzer
         [Description("")]
         END_OF_INPUT,
         [Description("")]
+        EPSILON,
+        [Description("")]
         L,
         [Description("{")]
         OPEN_CURLY,
